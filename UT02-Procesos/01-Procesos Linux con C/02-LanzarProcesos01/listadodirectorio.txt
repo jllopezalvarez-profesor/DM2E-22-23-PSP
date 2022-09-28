@@ -1,25 +1,15 @@
-total 76
-lrwxrwxrwx   1 root root     7 jul  1 14:13 bin -> usr/bin
-drwxr-xr-x   4 root root  4096 sep 23 12:52 boot
-drwxrwxr-x   2 root root  4096 jul  1 14:26 cdrom
-drwxr-xr-x  20 root root  4520 sep 23 16:04 dev
-drwxr-xr-x 131 root root 12288 sep 23 12:56 etc
-drwxr-xr-x   3 root root  4096 jul  1 14:26 home
-lrwxrwxrwx   1 root root     7 jul  1 14:13 lib -> usr/lib
-lrwxrwxrwx   1 root root     9 jul  1 14:13 lib32 -> usr/lib32
-lrwxrwxrwx   1 root root     9 jul  1 14:13 lib64 -> usr/lib64
-lrwxrwxrwx   1 root root    10 jul  1 14:13 libx32 -> usr/libx32
-drwx------   2 root root 16384 jul  1 14:12 lost+found
-drwxr-xr-x   2 root root  4096 abr 19 12:06 media
-drwxr-xr-x   2 root root  4096 abr 19 12:02 mnt
-drwxr-xr-x   3 root root  4096 sep 20 13:28 opt
-dr-xr-xr-x 380 root root     0 sep 20 13:11 proc
-drwx------   4 root root  4096 sep 20 13:11 root
-drwxr-xr-x  34 root root   960 sep 23 16:04 run
-lrwxrwxrwx   1 root root     8 jul  1 14:13 sbin -> usr/sbin
-drwxr-xr-x  12 root root  4096 sep 23 12:51 snap
-drwxr-xr-x   2 root root  4096 abr 19 12:02 srv
-dr-xr-xr-x  13 root root     0 sep 20 13:11 sys
-drwxrwxrwt  21 root root  4096 sep 23 16:19 tmp
-drwxr-xr-x  14 root root  4096 abr 19 12:02 usr
-drwxr-xr-x  14 root root  4096 abr 19 12:07 var
+total 313
+-rw-r--r--  1 User Administradores  53342 Sep 28 15:35 Cygwin-Terminal.ico
+-rwxr-xr-x  1 User User                88 Sep 28 15:34 Cygwin.bat
+-rw-r--r--  1 User Administradores 157097 Sep 28 15:35 Cygwin.ico
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 bin
+dr-xr-xr-x  1 User User                 0 Sep 28 15:59 cygdrive
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 dev
+drwxr-xr-x  1 User User                 0 Sep 28 15:35 etc
+drwxrwxrwt  1 User User                 0 Sep 28 15:35 home
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 lib
+dr-xr-xr-x 10 User User                 0 Sep 28 15:59 proc
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 sbin
+drwxrwxrwt  1 User User                 0 Sep 28 15:59 tmp
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 usr
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 var
