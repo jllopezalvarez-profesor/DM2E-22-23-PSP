@@ -1,6 +1,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <sys/wait.h>
 
 int main(int argc, char *argv[])
 {
@@ -11,22 +12,19 @@ int main(int argc, char *argv[])
 	{ /* hijo (1a generacion) = padre */
 		if ( (pid2=fork()) == 0 )
 		{ /* hijo (2a generacion)  = nieto */
-			printf("Soy el nieto (%d, hijo de %d)\n",
-getpid(), getppid());
+			printf("Soy el nieto (%d, hijo de %d)\n", getpid(), getppid());
 		}
 		else
 		{ /* padre (2a generacion) = padre */
 			
-wait(&status2);
-			printf("Soy el padre (%d, hijo de %d)\n",
-getpid(), getppid());
+			wait(&status2);
+			printf("Soy el padre (%d, hijo de %d)\n", getpid(), getppid());
 		}
 	}
 	else
 	{ /* padre (1a generacion) = abuelo */
 		wait(&status1);
-		printf("Soy el abuelo (%d, hijo de %d)\n", getpid(),
-getppid());
+		printf("Soy el abuelo (%d, hijo de %d)\n", getpid(), getppid());
 	}
 
 	return 0;
