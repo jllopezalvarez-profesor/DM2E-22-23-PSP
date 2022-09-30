@@ -18,14 +18,18 @@ int main()
            exit(-1);
            break;
    case 0 : //HIJO
+           printf("El hijo se va a dormir...\n");
+           sleep(5);
            printf("El HIJO escribe en el pipe...\n");
            write(fd[1], "Hola papi", 10);          
             break;   
    default : //PADRE
-           wait(NULL);
+           //wait(NULL);
            printf("El PADRE lee del pipe...\n");
-           read(fd[0], buffer, 10);
+           read(fd[0], buffer, 7);
            printf("\tMensaje leido: %s\n",buffer);           
+           read(fd[0], buffer, 7);
+           printf("\tMensaje leido (2): %s\n",buffer);           
            break;
  }
 }
