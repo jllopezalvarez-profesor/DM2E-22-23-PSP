@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <sys/wait.h>
 
-
+// Para matar los procesos, si se ha compilado con el nombre de ejecutable "ejemploForkInfinito", se pueden 
+// matar todos con pkill -f ejemploForkInfinito 
 
 void main() {
 

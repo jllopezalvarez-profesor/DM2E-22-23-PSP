@@ -2,7 +2,12 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
+
+
+
 void main() {
+
+
   pid_t pid, Hijo_pid;
   pid = fork();
 
