@@ -1,0 +1,15 @@
+total 313
+-rw-r--r--  1 User Administradores  53342 Sep 28 15:35 Cygwin-Terminal.ico
+-rwxr-xr-x  1 User User                88 Sep 28 15:34 Cygwin.bat
+-rw-r--r--  1 User Administradores 157097 Sep 28 15:35 Cygwin.ico
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 bin
+dr-xr-xr-x  1 User User                 0 Sep 28 15:59 cygdrive
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 dev
+drwxr-xr-x  1 User User                 0 Sep 28 15:35 etc
+drwxrwxrwt  1 User User                 0 Sep 28 15:35 home
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 lib
+dr-xr-xr-x 10 User User                 0 Sep 28 15:59 proc
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 sbin
+drwxrwxrwt  1 User User                 0 Sep 28 15:59 tmp
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 usr
+drwxr-xr-x  1 User User                 0 Sep 28 15:34 var
