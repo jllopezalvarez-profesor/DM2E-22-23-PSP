@@ -1,8 +1,8 @@
-package es.iesclaradelrey.dm2e2223.ut03hilos.ejercicios.ejercicio05;
+package es.iesclaradelrey.dm2e2223.ut03hilos.ejemplos.ejemplo11carrera;
 
 public class Lanzador {
 
-	private static int NUM_HILOS = 1000;
+	private static int NUM_HILOS = 100;
 
 	public static void main(String[] args) throws InterruptedException {
 		

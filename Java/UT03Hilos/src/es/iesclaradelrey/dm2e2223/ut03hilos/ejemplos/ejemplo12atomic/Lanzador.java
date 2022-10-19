@@ -1,4 +1,4 @@
-package es.iesclaradelrey.dm2e2223.ut03hilos.ejercicios.ejercicio05;
+package es.iesclaradelrey.dm2e2223.ut03hilos.ejemplos.ejemplo12atomic;
 
 public class Lanzador {
 
