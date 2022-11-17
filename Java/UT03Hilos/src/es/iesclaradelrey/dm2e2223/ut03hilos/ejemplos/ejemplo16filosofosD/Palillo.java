@@ -24,12 +24,14 @@ public class Palillo {
 	 */
 
 	public synchronized boolean coger(Filosofo filosofo) throws InterruptedException {
-		int tiempoEspera = ((int) Math.random() * (MAX_TIEMPO_ESPERA - MIN_TIEMPO_ESPERA)) + MIN_TIEMPO_ESPERA;
-		wait(tiempoEspera);
-		// Si al salir del wait no está disponible, devolvemos false. Si lo está,
-		// tomamos control del palillo.
-		if (!disponible)
-			return false;
+		if (!disponible) {
+			int tiempoEspera = ((int) Math.random() * (MAX_TIEMPO_ESPERA - MIN_TIEMPO_ESPERA)) + MIN_TIEMPO_ESPERA;
+			wait(tiempoEspera);
+			// Si al salir del wait no está disponible, devolvemos false. Si lo está,
+			// tomamos control del palillo.
+			if (!disponible)
+				return false;
+		}
 
 		System.out.printf("El filosofo %d coge el palillo %d.\n", filosofo.getNumero(), this.numero);
 		this.quienLoUsa = filosofo;
