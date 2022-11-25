@@ -1,4 +1,4 @@
-package es.iesclaradelrey.dm2e2223.ut99extra.funcional.ejemplo01;
+package es.iesclaradelrey.dm2e2223.ut99extra.funcional;
 
 import java.time.LocalDate;
 import java.time.Period;

@@ -1,4 +1,4 @@
-package es.iesclaradelrey.dm2e2223.ut99extra.funcional.ejemplo01;
+package es.iesclaradelrey.dm2e2223.ut99extra.funcional;
 
 import java.util.Comparator;
 import java.util.List;
