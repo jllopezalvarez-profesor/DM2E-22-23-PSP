@@ -48,7 +48,7 @@ public class Programa {
 		try {
 			generador.join();
 		} catch (InterruptedException e) {
-			System.err.println("No puedo esperar al generador porque ya se había interrumpido.");
+			System.err.println("Error, han interrumpido el programa principal.");
 			e.printStackTrace();
 		}
 		
@@ -58,6 +58,8 @@ public class Programa {
 		calc4.interrupt();
 		calc5.interrupt();
 
+		System.out.printf("En la cola quedan %d numeros.", cola.cantidadEnCola());
+		
 	}
 
 }

@@ -11,6 +11,10 @@ public class ColaNumeros {
 		this.cola = new LinkedList<>();
 	}
 
+	public int cantidadEnCola() {
+		return this.cola.size();
+	}
+	
 	public synchronized void Aniadir(int numero, int quienAniade) throws InterruptedException {
 		// Mientras la cola esté llena, tenemos que esperar
 		while (this.cola.size() >= tamanio) {

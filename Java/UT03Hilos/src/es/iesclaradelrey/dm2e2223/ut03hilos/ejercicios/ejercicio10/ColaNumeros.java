@@ -10,6 +10,10 @@ public class ColaNumeros {
 		this.tamanio = tamanio;
 		this.cola = new LinkedList<>();
 	}
+	
+	public int getOcupacionCola() {
+		return this.cola.size();
+	}
 
 	public synchronized void Aniadir(int numero, int quienAniade) throws InterruptedException {
 		// Mientras la cola esté llena, tenemos que esperar
