@@ -30,11 +30,12 @@ public class Ejemplos {
 		personas.stream().forEach(x -> System.out.println(x.getEdad()));
 
 		System.out.println("Funcional 2");
-		personas.stream().forEach(System.out::print);
+		personas.stream().forEach(System.out::println);
 
 		// Filter - Predicados
 		System.out.println("Filtrado > 25");
-		List<Persona> filtradas = personas.stream().filter(x -> x.getEdad() > 25).collect(Collectors.toList());
+		List<Persona> filtradas = personas.stream().filter(x -> x.getEdad() > 25).toList();
+		// List<Persona> filtradas = personas.stream().filter(x -> x.getEdad() > 25).collect(Collectors.toList());
 		System.out.println(filtradas);
 
 		System.out.println("Filtrado > 25 y nombre contiene C");
