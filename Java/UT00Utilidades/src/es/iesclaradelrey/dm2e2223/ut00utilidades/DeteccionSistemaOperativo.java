@@ -1,8 +1,8 @@
 package es.iesclaradelrey.dm2e2223.ut00utilidades;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStreamReader;
 
 
 /**
@@ -26,12 +26,19 @@ public class DeteccionSistemaOperativo {
 	}
 
 	private static SistemaOperativo DetectarDistroLinux() {
+		String[] cmd = {"/bin/sh", "-c", "cat /etc/os-release | grep '^NAME'"};
+		String distro = "";
 		try {
-			String contenidoEtcIssue = Files.readString(Path.of("/etc/issue")).toLowerCase();
-			if (contenidoEtcIssue.contains("ubuntu")) return SistemaOperativo.UBUNTU;
+			Process p = Runtime.getRuntime().exec(cmd);
+			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			if ((distro = br.readLine()) == null) return SistemaOperativo.LINUX_DISTRO;
+			distro = distro.replace("NAME=", "").replaceAll("\"", "");
+			br.close();
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return SistemaOperativo.LINUX_GENERIC;
+		System.out.println(distro);
+		return  SistemaOperativo.LINUX_DISTRO;
 	}
 	
 	
