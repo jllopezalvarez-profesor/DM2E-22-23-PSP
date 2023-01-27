@@ -1,4 +1,4 @@
-package es.iesclaradelrey.dm2e2223.ut05serviciosred.ejemplos;
+package es.iesclaradelrey.dm2e2223.ut05serviciosred.ejemplos.ejemplos01ftp;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,9 +16,8 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
 
-public class Ejemplo03ClienteFTPSImplicito {
-	private static final String SERVER = "dm2e-ftp-seguro.westeurope.cloudapp.azure.com";
-	private static final int PORT = 21;
+public class Ejemplo02ClienteFTPSExplicito {
+	private static final String SERVER = "dm2e-ftp-inseguro.westeurope.cloudapp.azure.com";
 	private static final String REMOTE_DIR = "/directorio-a";
 	private static final String REMOTE_FILE = "readme.txt";
 	private static final String LOCAL_DIR = "/home/jllopezalvarez/Downloads";
@@ -32,11 +31,11 @@ public class Ejemplo03ClienteFTPSImplicito {
 		try {
 			// Si no se especifica en el constructor, se usa FTPS Explícito. Si se usa
 			// new FTPSClient(true) se usaría FTPS implícito.
-			client = new FTPSClient(true);
+			client = new FTPSClient();
 
 			client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
 
-			client.connect(SERVER, PORT);
+			client.connect(SERVER);
 
 			if (FTPReply.isPositiveCompletion(client.getReplyCode())) {
 
@@ -46,36 +45,29 @@ public class Ejemplo03ClienteFTPSImplicito {
 
 					// Modo pasivo para que funcione desde redes NAT
 					client.enterLocalPassiveMode();
-					client.enterRemotePassiveMode();
 
 					if (client.changeWorkingDirectory(REMOTE_DIR)) {
-
 						// Obtener directorio actual
 						String directorioActual = client.printWorkingDirectory();
-						System.out.println("Directorio actual: " + directorioActual);
 
-						// A 25/01/2023 el listado de este directorio no funciona porque no está
-						// completamente configurado el servidor.
+						System.out.println("Directorio actual: " + directorioActual);
 
 						// Obtenemos el contenido del directorio:
 						FTPFile[] ficheros = client.listFiles();
-						mostrarContenidoDirectorio(ficheros);
 
-						// A 25/01/2023 la recuperación del fichero no funciona porque no está
-						// completamente configurado el servidor.
+						mostrarContenidoDirectorio(ficheros);
 
 						// Abrimos stream para guardar el fichero.
 						String localPath = Paths.get(LOCAL_DIR, LOCAL_FILE).toString();
 						try (FileOutputStream outputStream = new FileOutputStream(localPath)) {
 							// Descargamos fichero
-							client.execPBSZ(0);
-							client.execPROT("P");
 							if (client.retrieveFile(REMOTE_FILE, outputStream)) {
 								System.out.println("Fichero descargado.");
 							} else {
 								System.out.println("No se ha podido descargar el fichero");
 							}
 						}
+
 					}
 				}
 			}

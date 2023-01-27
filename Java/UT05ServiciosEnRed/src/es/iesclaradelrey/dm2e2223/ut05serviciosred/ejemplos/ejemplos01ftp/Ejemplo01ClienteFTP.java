@@ -1,4 +1,4 @@
-package es.iesclaradelrey.dm2e2223.ut05serviciosred.ejemplos;
+package es.iesclaradelrey.dm2e2223.ut05serviciosred.ejemplos.ejemplos01ftp;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

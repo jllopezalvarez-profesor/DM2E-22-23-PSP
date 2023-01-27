@@ -1,0 +1,2 @@
+Este mensaje está escrito en HTML.
+Su lector de correo no parece soportar HTML.
