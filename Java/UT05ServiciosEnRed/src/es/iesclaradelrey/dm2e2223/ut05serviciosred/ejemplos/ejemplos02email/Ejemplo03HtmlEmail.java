@@ -20,7 +20,7 @@ import org.apache.commons.mail.ImageHtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
 import org.apache.commons.mail.resolver.DataSourceFileResolver;
 
-public class Ejemplo02HtmlEmail {
+public class Ejemplo03HtmlEmail {
 
 	private static final String SMTP_SERVER = "smtp.educa.madrid.org";
 	private static final int SMTP_PORT = 587;
