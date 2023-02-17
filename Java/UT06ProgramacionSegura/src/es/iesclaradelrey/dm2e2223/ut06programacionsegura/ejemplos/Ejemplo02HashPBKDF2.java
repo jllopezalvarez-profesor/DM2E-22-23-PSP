@@ -7,6 +7,7 @@ import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -15,7 +16,7 @@ import net.datafaker.Faker;
 
 public class Ejemplo02HashPBKDF2 {
 	// Algoritmo que usaremos para generar el hash.
-	private static final String HASH_ALGORITHM_NAME = "PBKDF2WithHmacSHA256";
+	private static final String HASH_ALGORITHM_NAME = "PBKDF2WithHmacSHA512";
 	// Iteraciones que usará el algoritmo para añadir complejidad.
 	private static final int HASH_ITERATIONS = 1_000_000;
 	// 16 bytes para el salt. No es texto, es binario, más complicado de adivinar.
@@ -25,13 +26,19 @@ public class Ejemplo02HashPBKDF2 {
 
 	public static void main(String[] args) throws InvalidKeySpecException, NoSuchAlgorithmException {
 		// Objeto Faker para generar textos aleatorios.
-		Faker faker = new Faker(new Locale("es"));
+		// Faker faker = new Faker(new Locale("es"));
 		// Si lo inicializamos con una semilla concreta, los resultados se repiten
-		// Faker faker = new Faker(new Locale("es"), new Random(0));
+		Faker faker = new Faker(new Locale("es"), new Random(0));
 
 		String password = faker.harryPotter().spell();
+		long t = System.nanoTime();
 		String passwordSaltAndHash = hash(password);
+		long t2 = System.nanoTime();
+		System.out.printf("Tiempo en calcular HASH: %.5f\n", ((t2 - t) / 10e8));
+		t = System.nanoTime();
 		boolean verifyOk = verify(password, passwordSaltAndHash);
+		t2 = System.nanoTime();
+		System.out.printf("Tiempo en verificar HASH: %.5f\n", ((t2 - t) / 10e8));
 
 		System.out.printf("Algoritmo: %s\n", HASH_ALGORITHM_NAME);
 		System.out.printf("Password en texto plano: %s\n", password);
@@ -51,7 +58,7 @@ public class Ejemplo02HashPBKDF2 {
 		// Creamos el array de bytes para el salt
 		byte[] salt = new byte[SALT_SIZE_BYTES];
 		// Lo llenamos con bytes aleatorios.
-		new SecureRandom().nextBytes(salt);
+		// new SecureRandom().nextBytes(salt);
 		// Generamos el digest (salt+digest)
 		byte[] encoded = encode(password, salt);
 		// Devolvemos el conjunto salt+digest en Base64
