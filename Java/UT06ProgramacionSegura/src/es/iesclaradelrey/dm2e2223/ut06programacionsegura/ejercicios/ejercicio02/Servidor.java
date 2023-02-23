@@ -1,7 +1,8 @@
 package es.iesclaradelrey.dm2e2223.ut06programacionsegura.ejercicios.ejercicio02;
 
-import java.io.DataOutputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
@@ -23,7 +24,9 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class Cliente {
+public class Servidor {
+	public static final int PUERTO = 20_000;
+
 	private static final String ALGORITMO = "AES";
 	private static final String ALGORITMO_MODO_PADDING = "AES/CBC/PKCS5Padding";
 	private static final int TAMANIO_CLAVE = 256;
@@ -34,48 +37,54 @@ public class Cliente {
 
 	private static Scanner scanner = new Scanner(System.in);
 
-	public static void main(String[] args)
-			throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException,
-			InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
-		// Creamos el socket
-		try (Socket socketComunicacion = new Socket("localhost", Servidor.PUERTO)) {
-			try (DataOutputStream outputStream = new DataOutputStream(socketComunicacion.getOutputStream())) {
-				System.out.println("¿Qué quieres enviar al servidor? ");
-				String texto = scanner.nextLine();
-				byte[] textoEncriptadoConIV = encriptar(texto);
-				outputStream.write(textoEncriptadoConIV);
+	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
+		// Creamos el ServerSocket
+		try (ServerSocket socketServidor = new ServerSocket(PUERTO)) {
+			// Escuchamos en el puerto indicado
+			try (Socket socketComunicacion = socketServidor.accept()) {
+				// Leemos todo el contenido del socket hasta que se cierre
+				byte[] recibido = null;
+				try (DataInputStream inputStream = new DataInputStream(socketComunicacion.getInputStream())) {
+					recibido = inputStream.readAllBytes();
+				}
+				desencriptar(recibido);
+			} catch (IOException e) {
+				System.err.println("Error al esperar conexión del cliente.");
+				e.printStackTrace();
 			}
 		} catch (IOException e) {
-			System.err.println("Error al iniciar la conexión con el servidor.");
+			System.err.println("Error al crear el objeto ServerSocket.");
 			e.printStackTrace();
 		}
 	}
 
-	public static byte[] encriptar(String mensaje)
-			throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException,
-			InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+	public static void desencriptar(byte[] mensajeEncriptadoConIV) throws NoSuchAlgorithmException,
+			NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException,
+			BadPaddingException, InvalidKeySpecException {
+		// Creamos el algoritmo para descencriptar
+		Cipher aesCBCDesencriptar = Cipher.getInstance(ALGORITMO_MODO_PADDING);
 
+		// Ha llegado, hay que "Desmontar" encriptadoConIV
+		byte[] datosIvRecibido = new byte[aesCBCDesencriptar.getBlockSize()];
+		byte[] datosEncriptadosRecibidos = new byte[mensajeEncriptadoConIV.length - aesCBCDesencriptar.getBlockSize()];
+		System.arraycopy(mensajeEncriptadoConIV, 0, datosIvRecibido, 0, datosIvRecibido.length);
+		System.arraycopy(mensajeEncriptadoConIV, datosIvRecibido.length, datosEncriptadosRecibidos, 0,
+				datosEncriptadosRecibidos.length);
+
+		// Creamos el vector de inicialización a partir de los bytes recibidos
+		IvParameterSpec ivDesencriptar = new IvParameterSpec(datosIvRecibido);
+
+		// Configuramos algoritmo de desencriptación
 		Key clavePrivada = getKeyFromPassword(TAMANIO_CLAVE, KEY_PASS, KEY_SALT, HASH_ALGORITHM, HASH_ITERATIONS,
 				ALGORITMO);
-		Cipher aesCBCEncriptar = Cipher.getInstance(ALGORITMO_MODO_PADDING);
-		IvParameterSpec iv = getIVFromRandom(aesCBCEncriptar.getBlockSize() * 8);
-		aesCBCEncriptar.init(Cipher.ENCRYPT_MODE, clavePrivada, iv);
 
-		byte[] encriptado = aesCBCEncriptar.doFinal(mensaje.getBytes(StandardCharsets.UTF_8));
-		byte[] encriptadoConIV = new byte[iv.getIV().length + encriptado.length];
-		System.arraycopy(iv.getIV(), 0, encriptadoConIV, 0, iv.getIV().length);
-		System.arraycopy(encriptado, 0, encriptadoConIV, iv.getIV().length, encriptado.length);
+		aesCBCDesencriptar.init(Cipher.DECRYPT_MODE, clavePrivada, ivDesencriptar);
+		// Desencriptamos y convertimos a String
+		byte[] datosDesencriptadosRecibidos = aesCBCDesencriptar.doFinal(datosEncriptadosRecibidos);
+		String mensajeRecibido = new String(datosDesencriptadosRecibidos, StandardCharsets.UTF_8);
+		// Tenemos que convertir el array de bytes a texto.
+		System.out.printf("Mensaje recibido: '%s'.\n", mensajeRecibido);
 
-		return encriptadoConIV;
-	}
-
-	public static IvParameterSpec getIVFromRandom(int blockSizeBits) {
-		// Creamos el array de bytes para el IV
-		byte[] iv = new byte[blockSizeBits / 8];
-		// Generamos los bytres aleatorios.
-		new SecureRandom().nextBytes(iv);
-		// Devolvemos el nuevo IV
-		return new IvParameterSpec(iv);
 	}
 
 	private static Key getKeyFromPassword(int keySizeBits, String password, String passwordSalt,
