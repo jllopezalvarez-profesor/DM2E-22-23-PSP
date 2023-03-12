@@ -46,9 +46,9 @@ public class EnvioCorreoConAdjuntoEncriptado {
 			System.out.println("El fichero no existe.");
 			return;
 		}
-		
+
 		System.out.printf("Introduce la contraseña para la cuenta de correo %s: ", EMAIL_FROM);
-		
+
 		String userPassword = scanner.nextLine();
 
 		File ficheroEncriptado = new File(pathFichero + ".encriptado");
