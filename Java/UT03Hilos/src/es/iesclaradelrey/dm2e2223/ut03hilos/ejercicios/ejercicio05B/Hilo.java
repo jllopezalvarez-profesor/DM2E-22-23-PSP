@@ -10,7 +10,7 @@ public class Hilo extends Thread {
 	}
 
 	// Los métodos syncronized son regiones críticas, no se ejecutan nunca a la vez.
-	private synchronized void incrementarSuma() {
+	private static synchronized void incrementarSuma() {
 		suma++;
 	}
 
