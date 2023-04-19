@@ -14,7 +14,14 @@ public class Monitor {
 
 	public synchronized void add(int numero) throws InterruptedException {
 		while (this.cola.size() >= this.tamanioMaximo) {
+
 			System.out.println("Un hilo se para porque la cola se ha llenado");
+			wait();
+		}
+
+		// Esto está mal porque no está en el mismo while que la condición de tamaño.
+		// Podría darse el caso de que la cola tuviera más de tamanioMaximo elementos
+		while (!cola.isEmpty() && (cola.peek() % 2 != numero % 2)) {
 			wait();
 		}
 
