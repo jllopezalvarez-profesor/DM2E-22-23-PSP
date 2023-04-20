@@ -16,6 +16,7 @@ public class Hilo extends Thread {
 
 	public Hilo(String nombreHilo) {
 		super(nombreHilo);
+		
 	}
 
 	public void run() {
